@@ -1,19 +1,23 @@
+{-# LANGUAGE TemplateHaskell #-}
 import Data.List.Split (splitOn)
-import Data.MultiMap (MultiMap, fromList, (!))
-import Data.Set (Set, empty, insert, notMember, member)
+import Data.MultiMap as MultiMap (MultiMap, fromList, (!))
+import Data.Set as Set (Set, empty, insert, notMember, member, toList, fromList)
 import Data.Char (isUpper)
 import Data.Tuple (swap)
+import Data.Function.Memoize (deriveMemoizable, memoFix3)
 
 type Node = String
 type Path = [Node]
 type Edge = (Node, Node)
 
-paths :: MultiMap Node Node -> [Path]
-paths edges = paths' empty False "start"
+deriveMemoizable ''Set
+
+paths :: MultiMap Node Node -> Int
+paths edges = memoFix3 paths' empty False "start"
   where
-    paths' :: Set Node -> Bool -> Node -> [Path]
-    paths' smallSeen smallVisitedTwice x@"end" = [[x]]
-    paths' smallSeen smallVisitedTwice current = nextPaths
+    paths' :: (Set Node -> Bool -> Node -> Int) -> Set Node -> Bool -> Node -> Int
+    paths' f smallSeen smallVisitedTwice x@"end" = 1
+    paths' f smallSeen smallVisitedTwice current = nextPaths
       where
         isSmall = not . isUpper . head $ current
         newSmallVisitedTwice = smallVisitedTwice || isSmall && current `member` smallSeen
@@ -21,12 +25,12 @@ paths edges = paths' empty False "start"
         canVisit next = (not newSmallVisitedTwice || next `notMember` smallSeen) && next /= "start"
 
         nexts = filter canVisit $ edges ! current
-        nextPaths = [current:path | next <- nexts, path <- paths' newSmallSeen newSmallVisitedTwice next]
+        nextPaths = sum $ map (f newSmallSeen newSmallVisitedTwice) nexts
 
 findAnswer :: [Edge] -> Int
-findAnswer edges = length . paths $ edgesMap
+findAnswer edges = paths edgesMap
   where
-    edgesMap = fromList (edges ++ map swap edges)
+    edgesMap = MultiMap.fromList (edges ++ map swap edges)
 
 main :: IO ()
 main = do
