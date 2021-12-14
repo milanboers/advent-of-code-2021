@@ -24,6 +24,7 @@ dependencies:
 - matrix
 - multimap
 - containers
+- memoize
 
 executables:
   aoc2021-exe:
