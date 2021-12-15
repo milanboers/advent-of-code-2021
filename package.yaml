@@ -25,6 +25,7 @@ dependencies:
 - multimap
 - containers
 - memoize
+- PSQueue
 
 executables:
   aoc2021-exe:

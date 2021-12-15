@@ -11,6 +11,13 @@ packages:
       sha256: 903833765b601ec1cfd8bfeb2290dffaf6e551eaf4b1754c62858b181c414843
   original:
     hackage: memoize-1.1.1@sha256:a4c636df010564307ce1fe6e69379192de0c756f7766e61224da8a896ffd5fe1,1926
+- completed:
+    hackage: PSQueue-1.1.0.1@sha256:498cd3d55e4644afbeaeb4d1df63392cd95826991465099395abb7d0c3ce3e58,1318
+    pantry-tree:
+      size: 214
+      sha256: 20f22262b113ba31601dcdd2c29315f70365ab298f1ddb3a6fb2c6d8cfb07b2a
+  original:
+    hackage: PSQueue-1.1.0.1@sha256:498cd3d55e4644afbeaeb4d1df63392cd95826991465099395abb7d0c3ce3e58,1318
 snapshots:
 - completed:
     size: 586296
