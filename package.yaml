@@ -26,6 +26,7 @@ dependencies:
 - containers
 - memoize
 - PSQueue
+- vector
 
 executables:
   aoc2021-exe:
