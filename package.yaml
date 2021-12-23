@@ -27,6 +27,8 @@ dependencies:
 - memoize
 - PSQueue
 - vector
+- MemoTrie
+- uglymemo
 
 executables:
   aoc2021-exe:
